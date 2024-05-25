@@ -8,7 +8,7 @@ import axios from "axios";
  */
 export const getUserByEmail = (email) => {
     return withLogs(
-        axios.get(`${baseUrl}/users/${email}`, config),
+        axios.get(`${baseUrl}/api/users/${email}`, config),
         "getUserByEmail"
     );
 };

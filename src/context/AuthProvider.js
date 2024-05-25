@@ -1,8 +1,9 @@
 import React, { createContext, useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { login as loginRequest } from '../requests/authService';
+import { login as loginRequest} from '../requests/authService';
 import { getLogger } from '../utils';
+import {getUserByEmail} from "../requests/userService";
 
 const log = getLogger('AuthProvider');
 
@@ -17,10 +18,21 @@ export const AuthProvider = ({ children }) => {
         password: '',
         userId: localStorage.getItem('id') ?? null,
         token: localStorage.getItem('token') ?? '',
+        user: null,
     });
 
-    const { isAuthenticated, isAuthenticating, authenticationError, email, password, userId, token } = state;
+    const { isAuthenticated, isAuthenticating, authenticationError, email, password, userId, token, user } = state;
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (email) {
+            getUserByEmail(email).then((userData) => {
+                setState((prevState) => ({ ...prevState, user: userData }));
+            }).catch((error) => {
+                log('getUserByEmail failed', error);
+            });
+        }
+    }, [email]);
 
     const login = useCallback(async (email, password) => {
         log('login');
@@ -47,6 +59,10 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('email', email);
             localStorage.setItem('id', authToken.userId);
             navigate("/");  // Redirecționare după autentificare
+
+            // Obține datele utilizatorului după autentificare
+            const userData = await getUserByEmail(email);
+            setState((prevState) => ({ ...prevState, user: userData }));
         } catch (error) {
             log('login failed');
             setState((prevState) => ({
@@ -67,6 +83,7 @@ export const AuthProvider = ({ children }) => {
             password: '',
             userId: null,
             token: '',
+            user: null,
         });
         localStorage.removeItem('token');
         localStorage.removeItem('email');
@@ -75,7 +92,7 @@ export const AuthProvider = ({ children }) => {
     }, [navigate]);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, isAuthenticating, login, logout, authenticationError }}>
+        <AuthContext.Provider value={{ isAuthenticated, isAuthenticating, login, logout, authenticationError, user }}>
             {children}
         </AuthContext.Provider>
     );

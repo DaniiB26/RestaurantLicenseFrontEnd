@@ -1,0 +1,92 @@
+.imageContainer {
+    position: relative;
+    width: 100%;
+    max-width: 1500px;
+    height: 450px;
+    overflow: hidden;
+    margin: 0 auto;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 1);
+}
+
+.image {
+    width: 100%;
+    height: auto;
+}
+
+.cityContainer {
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px 200px;
+    margin-top: 25px; /* Adjust this value to control the gap between imageContainer and cityContainer */
+}
+
+.locationIcon {
+    color: #43080e;
+    font-size: 32px !important;
+}
+
+.cityName {
+    margin: 0 0 0 10px;
+    font-size: 28px;
+    color: #43080e;
+    font-weight: bold;
+}
+
+.searchBarContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    width: 60%;
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 1);
+    border: 5px solid #43080e;
+}
+
+.searchBar {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 30px 0 0 30px;
+    outline: none;
+}
+
+.filterButton {
+    width: 40px;
+    height: 40px;
+    background-color: #43080e;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.filterButtonIcon {
+    color: white;
+    font-size: 24px;
+}
+
+.restaurantsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 10px 200px;
+}
+
+.userInfo {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}

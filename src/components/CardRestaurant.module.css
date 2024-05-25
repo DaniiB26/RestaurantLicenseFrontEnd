@@ -1,0 +1,64 @@
+.card {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 300px; /* Modificăm lățimea cardului */
+    margin: 10px;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.imageContainer {
+    position: relative;
+    height: 180px; /* Modificăm înălțimea imaginii */
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.logoContainer {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.logo {
+    width: 40px; /* Modificăm dimensiunea logo-ului */
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.infoContainer {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.restaurantName {
+    font-weight: bold;
+    font-size: 20px !important; /* Modificăm dimensiunea fontului pentru numele restaurantului */
+    color: #333;
+}
+
+.ratingContainer {
+    display: flex;
+    align-items: center;
+}
+
+.rating {
+    font-size: 20px !important; /* Modificăm dimensiunea fontului pentru rating */
+    color: #ff9800;
+    margin-left: 5px;
+}
