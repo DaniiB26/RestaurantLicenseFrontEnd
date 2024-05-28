@@ -1,11 +1,10 @@
+/* Header.module.css */
 .img {
     height: 90px;
     width: 90px;
     padding: 10px;
     margin-left: 30px;
 }
-
-/* Header.module.css */
 
 .header {
     flex-grow: 1;
@@ -69,4 +68,30 @@
     transform: translateY(-50%);
     pointer-events: none;
     color: #555;
+}
+
+/* Dropdown Menu Styling */
+.MuiPaper-root {
+    background-color: #f8f9fa !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 8px !important;
+}
+
+.MuiMenuItem-root {
+    font-size: 1em !important;
+    padding: 10px 20px !important;
+    display: flex;
+    align-items: center;
+    color: #333 !important;
+}
+
+.MuiMenuItem-root:hover {
+    background-color: #43080e !important;
+    color: #fff !important;
+}
+
+/* Icon Button */
+.MuiIconButton-root {
+    font-size: 40px !important;
+    padding-left: 2 !important;
 }

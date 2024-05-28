@@ -57,7 +57,7 @@
     align-items: center;
     position: relative;
     overflow: hidden;
-    height: 2000px;
+    height: 1000px;
     width: 100%;
 }
 
@@ -168,8 +168,8 @@
     align-items: center;
 }
 
-.card h2 {
-    font-size: 1.4em;
+h2 {
+    font-size: 1.4em !important;
     margin-top: 10px;
     margin-bottom: 30px;
     font-weight: bold;
@@ -318,3 +318,105 @@ hr {
     color: white;
 }
 
+.card2 {
+    height: 350px;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    flex: 1;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.gallery {
+    justify-content: center; /* Center the gallery horizontally */
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.image-item {
+    display: flex;
+    justify-content: center; /* Center each image */
+}
+
+.menuGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: left;
+}
+
+.menuItem {
+    flex: 1 1 calc(33.333% - 20px);
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 200px; /* Ajustează dimensiunea minimă */
+    max-width: 480px; /* Ajustează dimensiunea maximă */
+    height: 150px;
+    margin: 5px;
+}
+
+.menuItemImage {
+    width: 30%; /* Ajustează dimensiunea imaginii */
+    height: auto;
+    border-radius: 4px;
+}
+
+.menuItemDetails {
+    width: 80%; /* Ajustează lățimea detaliilor */
+}
+
+.menuItemDetails h3 {
+    font-size: 1.2em; /* Diminuează dimensiunea titlului */
+    margin-bottom: 5px;
+    color: #43080e; /* Culoare pentru titlu */
+}
+
+.menuItemDetails p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.menuItemDetails .price {
+    font-weight: bold;
+    color: #000; /* Poți ajusta această culoare dacă dorești */
+}
+
+.type {
+    font-size: 1.5em; /* Diminuează dimensiunea titlului */
+    margin-bottom: 5px;
+    margin-left: 20px;
+    color: #43080e; /* Culoare pentru titlu */
+    text-align: left;
+    text-decoration: none;
+}
+
+.reviewsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.addReviewButton {
+    background-color: #43080e;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.addReviewButton:hover {
+    background-color: #5a0e2c;
+}

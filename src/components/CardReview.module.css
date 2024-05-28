@@ -1,0 +1,76 @@
+.reviewsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.reviewCard {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 300px; /* Ajustează dimensiunea cardului */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.reviewQuote {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 3em;
+    color: #eee;
+}
+
+.reviewContent {
+    margin-top: 20px;
+}
+
+.reviewUser {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.reviewRating {
+    margin: 10px 0;
+    color: #43080e;
+}
+
+.reviewDate {
+    font-size: 0.9em;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.reviewRecomandari {
+    margin-bottom: 10px;
+}
+
+.reviewRecomandari ul {
+    padding-left: 20px;
+    margin: 0;
+}
+
+.reviewRecomandari li {
+    margin: 5px 0;
+}
+
+.reviewActions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.likes, .dislikes {
+    display: flex;
+    align-items: center;
+}
+
+.likes span, .dislikes span {
+    margin-left: 5px;
+}

@@ -1,25 +1,39 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './RestaurantPage.module.css';
 import { getRestaurantByName } from "../requests/restaurantService";
 import Header from "../components/Header";
 import StarRatings from "react-star-ratings";
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
+import { Gallery } from "react-grid-gallery";
+import CardReview from '../components/CardReview';
+import {addReview, findReviewsByRestaurant} from "../requests/reviewService";
+import CreateReview from "../components/CreateReview";
+import {AuthContext} from "../context/AuthProvider";
+import CreateReservation from "../components/CreateReservation";
+import {addReservation} from "../requests/reservationService";
 
 const RestaurantPage = () => {
     const { name } = useParams();
+    const { user } = useContext(AuthContext);
     const [restaurant, setRestaurant] = useState(null);
+    const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [activeSection, setActiveSection] = useState('overview');
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+    const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     useEffect(() => {
-        const fetchRestaurant = async () => {
+        const fetchRestaurantAndReviews = async () => {
             try {
-                const data = await getRestaurantByName(name);
-                console.log('Response data:', data);
-                setRestaurant(data);
+                const restaurantData = await getRestaurantByName(name);
+                setRestaurant(restaurantData);
+                const reviewsData = await findReviewsByRestaurant(restaurantData.id);
+                setReviews(reviewsData);
                 setLoading(false);
             } catch (err) {
                 setError(err);
@@ -27,20 +41,60 @@ const RestaurantPage = () => {
             }
         };
 
-        fetchRestaurant();
+        fetchRestaurantAndReviews();
     }, [name]);
 
-    const handleOpenModal = () => {
-        setIsModalOpen(true);
+    const handleOpenImageModal = (index) => {
+        setCurrentImageIndex(index);
+        setIsImageModalOpen(true);
     };
 
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
+    const handleCloseImageModal = () => {
+        setIsImageModalOpen(false);
+    };
+
+    const handleOpenReviewModal = () => {
+        setIsReviewModalOpen(true);
+    };
+
+    const handleCloseReviewModal = () => {
+        setIsReviewModalOpen(false);
     };
 
     const handleMenuClick = (section) => {
         setActiveSection(section);
     };
+
+    const handleSubmitReview = async (review) => {
+        try {
+            const fullReview = {
+                ...review,
+                userId: user.id,
+                userName: user.fullName,
+                restaurantId: restaurant.id,
+                data: new Date(),
+                likes: 0,
+                dislikes: 0,
+                splitRating: review.splitRating ? review.splitRating : null
+            };
+            const newReview = await addReview(fullReview);
+            setReviews([...reviews, newReview]);
+            handleCloseReviewModal();
+        } catch (error) {
+            console.error("Error submitting review:", error);
+        }
+    };
+
+    const handleSubmitReservation = async (reservation) => {
+        try {
+            reservation.user_id = user.id;
+            reservation.restaurant_id = restaurant.id;
+            await addReservation(reservation);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
 
     if (loading) {
         return <div>Loading...</div>;
@@ -56,23 +110,42 @@ const RestaurantPage = () => {
 
     const priceRange = "$".repeat(restaurant.pret);
 
-    const Modal = ({ isOpen, onClose, images }) => {
+    const photos = restaurant.imagini.map((url) => ({
+        original: url,
+        originalHeight: '350px',
+        thumbnail: url,
+    }));
+    const photos2 = restaurant.imagini.map((url) => ({
+        src: url,
+        height: '350px',
+    }));
+
+    const ImageModal = ({ isOpen, onClose, images, startIndex }) => {
         if (!isOpen) return null;
 
         return (
             <div className={styles.modalOverlay}>
                 <div className={styles.modalContent}>
                     <button className={styles.closeButton} onClick={onClose}>x</button>
-                    <h2>{restaurant.nume}</h2>
-                    <div className={styles.imageGallery}>
-                        {images.map((image, index) => (
-                            <img key={index} src={image} alt={`Restaurant Photo ${index + 1}`} className={styles.modalImage} />
-                        ))}
-                    </div>
+                    <ImageGallery
+                        items={images}
+                        startIndex={startIndex}
+                        showPlayButton={false}
+                        showFullscreenButton={false}
+                        infinite={true}
+                    />
                 </div>
             </div>
         );
     };
+
+    const groupedMenuItems = restaurant.meniu.reduce((acc, item) => {
+        if (!acc[item.tip]) {
+            acc[item.tip] = [];
+        }
+        acc[item.tip].push(item);
+        return acc;
+    }, {});
 
     return (
         <div>
@@ -150,8 +223,6 @@ const RestaurantPage = () => {
                                 <p><strong>MEALS</strong><br/>{restaurant.meals.join(', ')}</p>
                                 <p><strong>FEATURES</strong><br/>{restaurant.features.join(', ')}</p>
                                 <hr/>
-                                <button className={styles.viewPhotosButton} onClick={handleOpenModal}>View Photos
-                                </button>
                             </div>
                             <div className={styles.card}>
                                 <h2>Location</h2>
@@ -176,18 +247,58 @@ const RestaurantPage = () => {
                             </div>
                         </div>
                     </div>
+                    <div className={styles.card2}>
+                        <h2>Photos</h2>
+                        <hr/>
+                        <div className={styles.gallery}>
+                            <Gallery images={photos2} enableImageSelection={false}
+                                     onClick={(index) => handleOpenImageModal(index)}/>
+                        </div>
+                        <hr/>
+                    </div>
                 </div>
                 <div className={`${styles.section} ${activeSection === 'menu' ? styles.active : ''}`} id="menu">
                     <h1>Meniu</h1>
+                    {Object.keys(groupedMenuItems).map((type) => (
+                        <div key={type}>
+                            <h2 className={styles.type}>{type}</h2>
+                            <div className={styles.menuGrid}>
+                                {groupedMenuItems[type].map((item, index) => (
+                                    <div key={index} className={styles.menuItem}>
+                                        <div className={styles.menuItemDetails}>
+                                            <h3>{item.preparat}</h3>
+                                            <p>{item.descriere}</p>
+                                            <p className={styles.price} >{item.pret}</p>
+                                        </div>
+                                        <img src={item.imagine} alt={item.preparat} className={styles.menuItemImage} />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
                 </div>
                 <div className={`${styles.section} ${activeSection === 'reviews' ? styles.active : ''}`} id="reviews">
                     <h1>Review</h1>
+                    <button className={styles.addReviewButton} onClick={handleOpenReviewModal}>Add Review</button>
+                    <div className={styles.reviewsGrid}>
+                        {reviews.map((review, index) => (
+                            <CardReview key={index} review={review}/>
+                        ))}
+                    </div>
                 </div>
                 <div className={`${styles.section} ${activeSection === 'reserve' ? styles.active : ''}`} id="reserve">
                     <h1>Reserve</h1>
+                    <CreateReservation onSubmit={handleSubmitReservation} restaurantId={restaurant.id} />
                 </div>
             </div>
-            <Modal isOpen={isModalOpen} onClose={handleCloseModal} images={restaurant.imagini} />
+            <ImageModal isOpen={isImageModalOpen} onClose={handleCloseImageModal} images={photos}
+                        startIndex={currentImageIndex}/>
+            <CreateReview
+                isOpen={isReviewModalOpen}
+                onClose={handleCloseReviewModal}
+                onSubmit={handleSubmitReview}
+                menuItems={restaurant.meniu} // Trimite lista de meniuri către CreateReview
+            />
         </div>
     );
 };

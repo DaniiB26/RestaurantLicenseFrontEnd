@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import React, { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
 import { useCity } from "../context/CityContext"; // Importă contextul orașului
 import {
@@ -13,6 +13,8 @@ import {
     FormControl,
 } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import LogoutIcon from '@mui/icons-material/Logout';
 import styles from "./Header.module.css";
 import useGeoLocation from "../hooks/useGeoLocation"; // Asigură-te că calea este corectă
 
@@ -107,9 +109,20 @@ export default function Header() {
                             }}
                             open={Boolean(anchorEl)}
                             onClose={handleMenuClose}
+                            PaperProps={{
+                                style: {
+                                    backgroundColor: '#f8f9fa',
+                                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                                    borderRadius: '8px',
+                                },
+                            }}
                         >
-                            <MenuItem onClick={handleProfileClick}>View Profile</MenuItem>
-                            <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
+                            <MenuItem onClick={handleProfileClick}>
+                                <AccountBoxIcon style={{ marginRight: '10px' }} /> View Profile
+                            </MenuItem>
+                            <MenuItem onClick={handleLogoutClick}>
+                                <LogoutIcon style={{ marginRight: '10px' }} /> Logout
+                            </MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>
