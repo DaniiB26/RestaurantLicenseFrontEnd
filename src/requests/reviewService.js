@@ -19,3 +19,12 @@ export const addReview = async (review) => {
         throw error;
     }
 };
+
+export const getReviewsByUserId = async (userId) => {
+    try {
+        const response = await axios.get(`${baseUrl}/api/reviews/user/${userId}`, config);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};

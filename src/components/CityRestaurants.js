@@ -1,8 +1,7 @@
-// CityRestaurants.js
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../api/axiosConfig';
-import Home from "../pages/Home";
+import Home from "../pages/Home";  // Poți redenumi acest fișier dacă dorești
 
 const CityRestaurants = () => {
     const [restaurants, setRestaurants] = useState([]);
@@ -14,9 +13,10 @@ const CityRestaurants = () => {
             try {
                 const response = await api.get(`/api/restaurants/search/by-city/${city}`);
                 console.log('Response:', response.data);
-                setRestaurants(response.data);
+                setRestaurants(Array.isArray(response.data) ? response.data : []);
             } catch (err) {
                 console.error('Error fetching data:', err);
+                setRestaurants([]);
             }
         };
 

@@ -9,3 +9,12 @@ export const addReservation = async (reservation) => {
         throw error;
     }
 };
+
+export const getReservationsByUserId = async (userId) => {
+    try {
+        const response = await axios.get(`${baseUrl}/api/reservations/user/${userId}`, config);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};

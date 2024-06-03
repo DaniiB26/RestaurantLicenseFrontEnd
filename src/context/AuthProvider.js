@@ -1,9 +1,9 @@
 import React, { createContext, useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { login as loginRequest} from '../requests/authService';
+import { login as loginRequest } from '../requests/authService';
 import { getLogger } from '../utils';
-import {getUserByEmail} from "../requests/userService";
+import { getUserByEmail } from "../requests/userService";
 
 const log = getLogger('AuthProvider');
 
@@ -19,15 +19,20 @@ export const AuthProvider = ({ children }) => {
         userId: localStorage.getItem('id') ?? null,
         token: localStorage.getItem('token') ?? '',
         user: null,
+        fullName: '',
     });
 
-    const { isAuthenticated, isAuthenticating, authenticationError, email, password, userId, token, user } = state;
+    const { isAuthenticated, isAuthenticating, authenticationError, email, password, userId, token, user, fullName } = state;
     const navigate = useNavigate();
 
     useEffect(() => {
         if (email) {
             getUserByEmail(email).then((userData) => {
-                setState((prevState) => ({ ...prevState, user: userData }));
+                setState((prevState) => ({
+                    ...prevState,
+                    user: userData,
+                    fullName: userData.fullName,
+                }));
             }).catch((error) => {
                 log('getUserByEmail failed', error);
             });
@@ -58,11 +63,15 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('token', authToken.token);
             localStorage.setItem('email', email);
             localStorage.setItem('id', authToken.userId);
-            navigate("/");  // Redirecționare după autentificare
+            navigate("/home");  // Redirecționare după autentificare
 
             // Obține datele utilizatorului după autentificare
             const userData = await getUserByEmail(email);
-            setState((prevState) => ({ ...prevState, user: userData }));
+            setState((prevState) => ({
+                ...prevState,
+                user: userData,
+                fullName: userData.fullName,
+            }));
         } catch (error) {
             log('login failed');
             setState((prevState) => ({
@@ -84,15 +93,16 @@ export const AuthProvider = ({ children }) => {
             userId: null,
             token: '',
             user: null,
+            fullName: '',
         });
         localStorage.removeItem('token');
         localStorage.removeItem('email');
         localStorage.removeItem('id');
-        navigate("/login");  // Redirecționare după deconectare
+        navigate("/home");  // Redirecționare după deconectare
     }, [navigate]);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, isAuthenticating, login, logout, authenticationError, user }}>
+        <AuthContext.Provider value={{ isAuthenticated, isAuthenticating, login, logout, authenticationError, user, fullName }}>
             {children}
         </AuthContext.Provider>
     );

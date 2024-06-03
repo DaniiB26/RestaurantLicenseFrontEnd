@@ -1,0 +1,9 @@
+.resultsContainer {
+    padding: 20px;
+}
+
+.restaurantsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

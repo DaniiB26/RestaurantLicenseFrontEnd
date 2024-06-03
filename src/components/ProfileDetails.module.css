@@ -1,0 +1,18 @@
+.profileDetails {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profilePicture {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+
+.profileDetails h2 {
+    margin-top: 10px;
+}
+
+.profileDetails p {
+    margin: 5px 0;
+}

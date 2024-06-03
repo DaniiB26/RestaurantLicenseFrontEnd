@@ -1,7 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthProvider";
-import { useCity } from "../context/CityContext"; // Importă contextul orașului
+import { useCity } from "../context/CityContext";
+import { useNavigate } from "react-router-dom";
 import {
     AppBar,
     Toolbar,
@@ -13,14 +13,14 @@ import {
     FormControl,
 } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import LogoutIcon from '@mui/icons-material/Logout';
 import styles from "./Header.module.css";
-import useGeoLocation from "../hooks/useGeoLocation"; // Asigură-te că calea este corectă
+import useGeoLocation from "../hooks/useGeoLocation";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 export default function Header() {
     const { username } = useContext(AuthContext);
-    const { city, setCity } = useCity(); // Utilizează contextul orașului
+    const { city, setCity } = useCity();
     const [anchorEl, setAnchorEl] = useState(null);
     const navigate = useNavigate();
     const location = useGeoLocation();
@@ -33,7 +33,7 @@ export default function Header() {
 
     const handleCityChange = (event) => {
         setCity(event.target.value);
-        // navigate(`/restaurant/${event.target.value}`);
+        navigate('/home'); // Actualizează pagina Home pentru noul oraș
     };
 
     const handleProfileMenuOpen = (event) => {
@@ -54,17 +54,27 @@ export default function Header() {
         handleMenuClose();
     };
 
+    const handleLogoClick = () => {
+        navigate('/home');
+    };
+
     return (
         <Box className={styles.header}>
             <AppBar position="static" className={styles.appBar}>
                 <Toolbar>
-                    <img src="/Logo2.png" alt="Login Info" className={styles.img} />
-                    <Box sx={{ flexGrow: 1 }} />
+                    <img
+                        src="/Logo2.png"
+                        alt="Login Info"
+                        className={styles.img}
+                        onClick={handleLogoClick}
+                        style={{cursor: 'pointer'}} // Adăugăm stil pentru cursor pointer
+                    />
+                    <Box sx={{flexGrow: 1}}/>
                     <Typography variant="h6" component="div" className={styles.customTypography}>
                         A Step Closer To Eat Your Favourite Food!
                     </Typography>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{flexGrow: 1}}/>
+                    <Box sx={{display: 'flex', alignItems: 'center'}}>
                         <FormControl variant="outlined" className={styles.customFormControl}>
                             <div className={styles.customSelectWrapper}>
                                 <select
@@ -92,9 +102,9 @@ export default function Header() {
                             aria-haspopup="true"
                             onClick={handleProfileMenuOpen}
                             color="inherit"
-                            sx={{ fontSize: 40, paddingLeft: 2 }} // Adăugăm stilizarea aici
+                            sx={{fontSize: 40, paddingLeft: 2}} // Adăugăm stilizarea aici
                         >
-                            <MenuIcon />
+                            <MenuIcon/>
                         </IconButton>
                         <Menu
                             anchorEl={anchorEl}
@@ -118,10 +128,10 @@ export default function Header() {
                             }}
                         >
                             <MenuItem onClick={handleProfileClick}>
-                                <AccountBoxIcon style={{ marginRight: '10px' }} /> View Profile
+                                <AccountBoxIcon style={{marginRight: '10px'}}/> View Profile
                             </MenuItem>
                             <MenuItem onClick={handleLogoutClick}>
-                                <LogoutIcon style={{ marginRight: '10px' }} /> Logout
+                                <LogoutIcon style={{marginRight: '10px'}}/> Logout
                             </MenuItem>
                         </Menu>
                     </Box>
