@@ -87,13 +87,21 @@ const RestaurantPage = () => {
 
     const handleSubmitReservation = async (reservation) => {
         try {
-            reservation.user_id = user.id;
-            reservation.restaurant_id = restaurant.id;
-            await addReservation(reservation);
+            const newReservation = {
+                ...reservation,
+                userId: user.id,
+                restaurantId: restaurant.id,
+                status: 'Pending',
+                creareRezervare: new Date().toISOString()
+            };
+            console.log(newReservation); // Log the reservation to check data
+            await addReservation(newReservation);
         } catch (error) {
             console.error(error);
         }
     };
+
+
 
 
     if (loading) {

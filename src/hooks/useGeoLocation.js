@@ -12,7 +12,7 @@ export default function useGeoLocation() {
         try {
             const response = await fetch('https://ipapi.co/json/');
             const data = await response.json();
-            console.log("API Response:", data); // Debug: Log the API response
+            console.log("API Response:", data);
             setLocationData(data);
         } catch (error) {
             console.error("Error fetching location data:", error);
@@ -25,3 +25,5 @@ export default function useGeoLocation() {
         lon: locationData?.longitude,
     };
 }
+
+

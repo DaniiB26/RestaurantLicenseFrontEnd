@@ -8,10 +8,10 @@ const ReservationList = ({ reservations }) => {
             <ul>
                 {reservations.map((reservation, index) => (
                     <li key={index} className={styles.reservationItem}>
-                        <p><strong>Restaurant:</strong> {reservation.restaurant_id}</p>
-                        <p><strong>Date:</strong> {new Date(reservation.data_rezervare).toLocaleString()}</p>
+                        <p><strong>Restaurant:</strong> {reservation.restaurantId}</p>
+                        <p><strong>Date:</strong> {new Date(reservation.dataRezervare).toLocaleString()}</p>
                         <p><strong>Status:</strong> {reservation.status}</p>
-                        <p><strong>Number of People:</strong> {reservation.numar_persoane}</p>
+                        <p><strong>Number of People:</strong> {reservation.numarPersoane}</p>
                         <p><strong>Specifications:</strong> {reservation.specificatii}</p>
                     </li>
                 ))}

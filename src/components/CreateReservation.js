@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import styles from './CreateReservation.module.css';
+import { Modal, Box, Typography, Button } from '@mui/material';
 
 const CreateReservation = ({ onSubmit, restaurantId }) => {
     const [reservation, setReservation] = useState({
-        data_rezervare: '',
-        numar_persoane: 1,
+        dataRezervare: '',
+        numarPersoane: 1,
         specificatii: ''
     });
+    const [open, setOpen] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -19,7 +21,19 @@ const CreateReservation = ({ onSubmit, restaurantId }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         onSubmit({ ...reservation, restaurant_id: restaurantId });
+        setOpen(true);
+        resetForm();
     };
+
+    const resetForm = () => {
+        setReservation({
+            dataRezervare: '',
+            numarPersoane: 1,
+            specificatii: ''
+        });
+    };
+
+    const handleClose = () => setOpen(false);
 
     return (
         <div className={styles.reservationForm}>
@@ -29,8 +43,8 @@ const CreateReservation = ({ onSubmit, restaurantId }) => {
                     <label>Reservation Date:</label>
                     <input
                         type="datetime-local"
-                        name="data_rezervare"
-                        value={reservation.data_rezervare}
+                        name="dataRezervare"
+                        value={reservation.dataRezervare}
                         onChange={handleChange}
                         required
                     />
@@ -39,8 +53,8 @@ const CreateReservation = ({ onSubmit, restaurantId }) => {
                     <label>Number of People:</label>
                     <input
                         type="number"
-                        name="numar_persoane"
-                        value={reservation.numar_persoane}
+                        name="numarPersoane"
+                        value={reservation.numarPersoane}
                         onChange={handleChange}
                         min="1"
                         required
@@ -56,6 +70,24 @@ const CreateReservation = ({ onSubmit, restaurantId }) => {
                 </div>
                 <button type="submit" className={styles.submitButton}>Submit</button>
             </form>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="reservation-success-title"
+                aria-describedby="reservation-success-description"
+            >
+                <Box className={styles.modalBox}>
+                    <Typography id="reservation-success-title" variant="h6" component="h2">
+                        Reservation Sent
+                    </Typography>
+                    <Typography id="reservation-success-description" sx={{ mt: 2 }}>
+                        Your reservation has been sent. Please wait for confirmation.
+                    </Typography>
+                    <Button onClick={handleClose} sx={{ mt: 2 }} variant="contained">
+                        Close
+                    </Button>
+                </Box>
+            </Modal>
         </div>
     );
 };

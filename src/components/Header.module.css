@@ -1,4 +1,3 @@
-/* Header.module.css */
 .img {
     height: 90px;
     width: 90px;
@@ -94,4 +93,36 @@
 .MuiIconButton-root {
     font-size: 40px !important;
     padding-left: 2 !important;
+}
+
+/* Notification Menu Styling */
+.notificationHeader {
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ced4da;
+}
+
+.unreadDot {
+    width: 15px;
+    height: 15px;
+    background-color: #d32f2f;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+.notificationItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    color: #333 !important;
+}
+
+.notificationItem:hover {
+    background-color: #43080e !important;
+    color: #fff !important;
+}
+
+.notificationItemText {
+    flex-grow: 1;
 }
