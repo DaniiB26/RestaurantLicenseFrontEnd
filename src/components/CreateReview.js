@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import styles from './CreateReview.module.css'; // Asigură-te că adaugi stilurile necesare pentru modal
+import React, { useState, useEffect } from 'react';
+import styles from './CreateReview.module.css';
+import StarRatings from 'react-star-ratings';
 
 const CreateReview = ({ isOpen, onClose, onSubmit, menuItems }) => {
-    const [review, setReview] = useState({
+    const initialReviewState = {
         recenzie: '',
         nota: 0,
         recomandari: [],
@@ -12,8 +13,17 @@ const CreateReview = ({ isOpen, onClose, onSubmit, menuItems }) => {
             value: 0,
             atmosphere: 0
         }
-    });
+    };
+
+    const [review, setReview] = useState(initialReviewState);
     const [useSplitRating, setUseSplitRating] = useState(false);
+
+    useEffect(() => {
+        if (!isOpen) {
+            setReview(initialReviewState);
+            setUseSplitRating(false);
+        }
+    }, [isOpen]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -23,13 +33,12 @@ const CreateReview = ({ isOpen, onClose, onSubmit, menuItems }) => {
         }));
     };
 
-    const handleSplitRatingChange = (e) => {
-        const { name, value } = e.target;
+    const handleSplitRatingChange = (rating, name) => {
         setReview((prevReview) => ({
             ...prevReview,
             splitRating: {
                 ...prevReview.splitRating,
-                [name]: value
+                [name]: rating
             }
         }));
     };
@@ -48,6 +57,13 @@ const CreateReview = ({ isOpen, onClose, onSubmit, menuItems }) => {
         }));
     };
 
+    const handleRatingChange = (newRating) => {
+        setReview((prevReview) => ({
+            ...prevReview,
+            nota: newRating
+        }));
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         onSubmit(review);
@@ -60,6 +76,7 @@ const CreateReview = ({ isOpen, onClose, onSubmit, menuItems }) => {
             <div className={styles.modalContent}>
                 <button className={styles.closeButton} onClick={onClose}>x</button>
                 <h2>Add Review</h2>
+                <hr className={styles.separator} />
                 <form onSubmit={handleSubmit}>
                     <div className={styles.formGroup}>
                         <label>Review:</label>
@@ -70,19 +87,20 @@ const CreateReview = ({ isOpen, onClose, onSubmit, menuItems }) => {
                             required
                         />
                     </div>
+                    <hr className={styles.separator} />
                     <div className={styles.formGroup}>
                         <label>Rating:</label>
-                        <input
-                            type="number"
-                            name="nota"
-                            value={review.nota}
-                            onChange={handleChange}
-                            min="0"
-                            max="5"
-                            step="0.1"
-                            required
+                        <StarRatings
+                            rating={review.nota}
+                            starRatedColor="#43080e"
+                            numberOfStars={5}
+                            changeRating={handleRatingChange}
+                            starDimension="30px"
+                            starSpacing="5px"
+                            name='rating'
                         />
                     </div>
+                    <hr className={styles.separator} />
                     <div className={styles.formGroup}>
                         <label>Use split rating:</label>
                         <input
@@ -93,60 +111,58 @@ const CreateReview = ({ isOpen, onClose, onSubmit, menuItems }) => {
                     </div>
                     {useSplitRating && (
                         <>
+                            <hr className={styles.separator} />
                             <div className={styles.formGroup}>
                                 <label>Food:</label>
-                                <input
-                                    type="number"
-                                    name="food"
-                                    value={review.splitRating.food}
-                                    onChange={handleSplitRatingChange}
-                                    min="0"
-                                    max="5"
-                                    step="0.1"
-                                    required
+                                <StarRatings
+                                    rating={review.splitRating.food}
+                                    starRatedColor="#43080e"
+                                    numberOfStars={5}
+                                    changeRating={(rating) => handleSplitRatingChange(rating, 'food')}
+                                    starDimension="30px"
+                                    starSpacing="5px"
+                                    name='food'
                                 />
                             </div>
                             <div className={styles.formGroup}>
                                 <label>Service:</label>
-                                <input
-                                    type="number"
-                                    name="service"
-                                    value={review.splitRating.service}
-                                    onChange={handleSplitRatingChange}
-                                    min="0"
-                                    max="5"
-                                    step="0.1"
-                                    required
+                                <StarRatings
+                                    rating={review.splitRating.service}
+                                    starRatedColor="#43080e"
+                                    numberOfStars={5}
+                                    changeRating={(rating) => handleSplitRatingChange(rating, 'service')}
+                                    starDimension="30px"
+                                    starSpacing="5px"
+                                    name='service'
                                 />
                             </div>
                             <div className={styles.formGroup}>
                                 <label>Value:</label>
-                                <input
-                                    type="number"
-                                    name="value"
-                                    value={review.splitRating.value}
-                                    onChange={handleSplitRatingChange}
-                                    min="0"
-                                    max="5"
-                                    step="0.1"
-                                    required
+                                <StarRatings
+                                    rating={review.splitRating.value}
+                                    starRatedColor="#43080e"
+                                    numberOfStars={5}
+                                    changeRating={(rating) => handleSplitRatingChange(rating, 'value')}
+                                    starDimension="30px"
+                                    starSpacing="5px"
+                                    name='value'
                                 />
                             </div>
                             <div className={styles.formGroup}>
                                 <label>Atmosphere:</label>
-                                <input
-                                    type="number"
-                                    name="atmosphere"
-                                    value={review.splitRating.atmosphere}
-                                    onChange={handleSplitRatingChange}
-                                    min="0"
-                                    max="5"
-                                    step="0.1"
-                                    required
+                                <StarRatings
+                                    rating={review.splitRating.atmosphere}
+                                    starRatedColor="#43080e"
+                                    numberOfStars={5}
+                                    changeRating={(rating) => handleSplitRatingChange(rating, 'atmosphere')}
+                                    starDimension="30px"
+                                    starSpacing="5px"
+                                    name='atmosphere'
                                 />
                             </div>
                         </>
                     )}
+                    <hr className={styles.separator} />
                     <div className={styles.formGroup}>
                         <label>Recomandari:</label>
                         <select
@@ -161,6 +177,7 @@ const CreateReview = ({ isOpen, onClose, onSubmit, menuItems }) => {
                             ))}
                         </select>
                     </div>
+                    <hr className={styles.separator} />
                     <button type="submit" className={styles.submitButton}>Submit</button>
                 </form>
             </div>

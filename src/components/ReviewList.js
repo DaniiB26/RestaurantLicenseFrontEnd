@@ -6,9 +6,9 @@ const ReviewList = ({ reviews }) => {
     return (
         <div className={styles.reviewList}>
             <h2>User Reviews</h2>
-            <ul>
+            <div className={styles.gridContainer}>
                 {reviews.map((review, index) => (
-                    <li key={index} className={styles.reviewItem}>
+                    <div key={index} className={styles.reviewItem}>
                         <p><strong>Restaurant:</strong> {review.restaurantId}</p>
                         <p><strong>Date:</strong> {new Date(review.data).toLocaleString()}</p>
                         <p><strong>Review:</strong> {review.recenzie}</p>
@@ -32,13 +32,9 @@ const ReviewList = ({ reviews }) => {
                                 </ul>
                             </div>
                         )}
-                        <div className={styles.likesDislikes}>
-                            <span>👍 {review.likes}</span>
-                            <span>👎 {review.dislikes}</span>
-                        </div>
-                    </li>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };

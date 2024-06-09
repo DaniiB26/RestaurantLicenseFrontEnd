@@ -9,7 +9,6 @@ const UserProfile = ({ user, reservations, reviews, restaurant }) => {
     const [activeTab, setActiveTab] = useState('reservations');
     const navigate = useNavigate();
 
-    // Log the user and restaurant objects to the console
     useEffect(() => {
         console.log("User object:", user);
         console.log("Restaurant object:", restaurant);
@@ -24,16 +23,30 @@ const UserProfile = ({ user, reservations, reviews, restaurant }) => {
     return (
         <div className={styles.userProfile}>
             <div className={styles.header}>
-                {user && <ProfileDetails user={user} />}
-                {restaurant && user && user.id === restaurant.managerId && (
-                    <button onClick={() => handleManageRestaurantClick(restaurant.id)} className={styles.manageButton}>
-                        Manage {restaurant.nume}
-                    </button>
-                )}
+                <div className={styles.profileSection}>
+                    {user && <ProfileDetails user={user} />}
+                </div>
+                <div className={styles.manageSection}>
+                    {restaurant && user && user.id === restaurant.managerId && (
+                        <button onClick={() => handleManageRestaurantClick(restaurant.id)} className={styles.manageButton}>
+                            Manage Your Restaurant
+                        </button>
+                    )}
+                </div>
             </div>
             <div className={styles.tabs}>
-                <button onClick={() => setActiveTab('reservations')}>Reservations</button>
-                <button onClick={() => setActiveTab('reviews')}>Reviews</button>
+                <button
+                    className={`${styles.tabButton} ${activeTab === 'reservations' ? styles.activeTab : ''}`}
+                    onClick={() => setActiveTab('reservations')}
+                >
+                    Reservations
+                </button>
+                <button
+                    className={`${styles.tabButton} ${activeTab === 'reviews' ? styles.activeTab : ''}`}
+                    onClick={() => setActiveTab('reviews')}
+                >
+                    Reviews
+                </button>
             </div>
             <div className={styles.content}>
                 {activeTab === 'reservations' && <ReservationList reservations={reservations} />}

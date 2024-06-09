@@ -29,14 +29,14 @@ const CardReview = ({ review }) => {
                     </ul>
                 </div>
             </div>
-            <div className={styles.reviewActions}>
-                <div className={styles.likes}>
-                    👍 <span>{review.likes}</span>
-                </div>
-                <div className={styles.dislikes}>
-                    👎 <span>{review.dislikes}</span>
-                </div>
-            </div>
+            {/*<div className={styles.reviewActions}>*/}
+            {/*    <div className={styles.likes}>*/}
+            {/*        👍 <span>{review.likes}</span>*/}
+            {/*    </div>*/}
+            {/*    <div className={styles.dislikes}>*/}
+            {/*        👎 <span>{review.dislikes}</span>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </div>
     );
 };

@@ -13,12 +13,13 @@
 
 .modalContent {
     background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     width: 400px;
     max-width: 90%;
     position: relative;
+    text-align: center;
 }
 
 .closeButton {
@@ -31,26 +32,76 @@
     cursor: pointer;
 }
 
+.title {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
 .formGroup {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
-.formGroup label {
+.label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
 }
 
-.formGroup input[type="number"],
-.formGroup input[type="text"],
-.formGroup textarea {
+.checkboxGroup {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #333;
+}
+
+.checkbox {
+    margin-right: 8px;
+}
+
+.input {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 8px;
+    font-size: 16px;
 }
 
-.formGroup input[type="checkbox"] {
-    margin-right: 5px;
+.ratingButtons, .priceButtons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.ratingButton, .priceButton {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 16px;
+    flex: 1;
+}
+
+.ratingButton:hover, .priceButton:hover {
+    background-color: #e0e0e0;
+}
+
+.ratingButton.active, .priceButton.active {
+    background-color: #43080e;
+    color: white;
+    border: none;
 }
 
 .applyButton {
@@ -58,11 +109,10 @@
     color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease, color 0.3s ease;
-    display: block;
     width: 100%;
 }
 

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styles from './FilterModal.module.css';
+import { IconButton } from '@mui/material';
+import BlockIcon from '@mui/icons-material/Block';
 
 const FilterModal = ({ isOpen, onClose, onApply, restaurantTypes }) => {
     const [filters, setFilters] = useState({
@@ -23,6 +25,20 @@ const FilterModal = ({ isOpen, onClose, onApply, restaurantTypes }) => {
         }
     };
 
+    const handlePriceChange = (value) => {
+        setFilters(prevFilters => ({
+            ...prevFilters,
+            pret: value
+        }));
+    };
+
+    const handleRatingChange = (value) => {
+        setFilters(prevFilters => ({
+            ...prevFilters,
+            rating_mediu: value
+        }));
+    };
+
     const handleApply = () => {
         onApply(filters);
         onClose();
@@ -34,17 +50,18 @@ const FilterModal = ({ isOpen, onClose, onApply, restaurantTypes }) => {
         <div className={styles.modalOverlay}>
             <div className={styles.modalContent}>
                 <button className={styles.closeButton} onClick={onClose}>x</button>
-                <h2>Filter Restaurants</h2>
+                <h2 className={styles.title}>Filter Restaurants</h2>
                 <div className={styles.formGroup}>
-                    <label>Tip Restaurant:</label>
-                    <div>
+                    <label className={styles.label}>Tip Restaurant:</label>
+                    <div className={styles.checkboxGroup}>
                         {restaurantTypes.map((type, index) => (
-                            <label key={index}>
+                            <label key={index} className={styles.checkboxLabel}>
                                 <input
                                     type="checkbox"
                                     name="tip_restaurant"
                                     value={type}
                                     onChange={handleChange}
+                                    className={styles.checkbox}
                                 />
                                 {type}
                             </label>
@@ -52,27 +69,77 @@ const FilterModal = ({ isOpen, onClose, onApply, restaurantTypes }) => {
                     </div>
                 </div>
                 <div className={styles.formGroup}>
-                    <label>Rating Mediu:</label>
-                    <input
-                        type="number"
-                        name="rating_mediu"
-                        min="0"
-                        max="5"
-                        step="0.1"
-                        value={filters.rating_mediu}
-                        onChange={handleChange}
-                    />
+                    <label className={styles.label}>Average Rating:</label>
+                    <div className={styles.ratingButtons}>
+                        <button
+                            type="button"
+                            className={`${styles.ratingButton} ${filters.rating_mediu === 0 ? styles.active : ''}`}
+                            onClick={() => handleRatingChange(0)}
+                        >
+                            Any
+                        </button>
+                        <button
+                            type="button"
+                            className={`${styles.ratingButton} ${filters.rating_mediu === 4.3 ? styles.active : ''}`}
+                            onClick={() => handleRatingChange(4.3)}
+                        >
+                            4.3+
+                        </button>
+                        <button
+                            type="button"
+                            className={`${styles.ratingButton} ${filters.rating_mediu === 4.5 ? styles.active : ''}`}
+                            onClick={() => handleRatingChange(4.5)}
+                        >
+                            4.5+
+                        </button>
+                        <button
+                            type="button"
+                            className={`${styles.ratingButton} ${filters.rating_mediu === 4.7 ? styles.active : ''}`}
+                            onClick={() => handleRatingChange(4.7)}
+                        >
+                            4.7+
+                        </button>
+                    </div>
                 </div>
                 <div className={styles.formGroup}>
-                    <label>Pret:</label>
-                    <input
-                        type="number"
-                        name="pret"
-                        min="1"
-                        max="4"
-                        value={filters.pret}
-                        onChange={handleChange}
-                    />
+                    <label className={styles.label}>Price:</label>
+                    <div className={styles.priceButtons}>
+                        <button
+                            type="button"
+                            className={`${styles.priceButton} ${filters.pret === 0 ? styles.active : ''}`}
+                            onClick={() => handlePriceChange(0)}
+                        >
+                            <BlockIcon/>
+                        </button>
+                        <button
+                            type="button"
+                            className={`${styles.priceButton} ${filters.pret === 1 ? styles.active : ''}`}
+                            onClick={() => handlePriceChange(1)}
+                        >
+                            Cheap
+                        </button>
+                        <button
+                            type="button"
+                            className={`${styles.priceButton} ${filters.pret === 2 ? styles.active : ''}`}
+                            onClick={() => handlePriceChange(2)}
+                        >
+                            Moderate
+                        </button>
+                        <button
+                            type="button"
+                            className={`${styles.priceButton} ${filters.pret === 3 ? styles.active : ''}`}
+                            onClick={() => handlePriceChange(3)}
+                        >
+                            Expensive
+                        </button>
+                        <button
+                            type="button"
+                            className={`${styles.priceButton} ${filters.pret === 4 ? styles.active : ''}`}
+                            onClick={() => handlePriceChange(4)}
+                        >
+                            Extravagant
+                        </button>
+                    </div>
                 </div>
                 <button className={styles.applyButton} onClick={handleApply}>Apply</button>
             </div>

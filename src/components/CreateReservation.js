@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
 import styles from './CreateReservation.module.css';
 import { Modal, Box, Typography, Button } from '@mui/material';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import { addMinutes, setHours, setMinutes, isBefore } from 'date-fns';
 
 const CreateReservation = ({ onSubmit, restaurantId }) => {
     const [reservation, setReservation] = useState({
-        dataRezervare: '',
+        dataRezervare: new Date(),
         numarPersoane: 1,
         specificatii: ''
     });
     const [open, setOpen] = useState(false);
+
+    const handleDateChange = (date) => {
+        setReservation((prevReservation) => ({
+            ...prevReservation,
+            dataRezervare: date,
+        }));
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,7 +37,7 @@ const CreateReservation = ({ onSubmit, restaurantId }) => {
 
     const resetForm = () => {
         setReservation({
-            dataRezervare: '',
+            dataRezervare: new Date(),
             numarPersoane: 1,
             specificatii: ''
         });
@@ -35,18 +45,27 @@ const CreateReservation = ({ onSubmit, restaurantId }) => {
 
     const handleClose = () => setOpen(false);
 
+    const filterPassedTime = (time) => {
+        const currentDate = new Date();
+        const selectedDate = new Date(time);
+        return currentDate.getTime() < selectedDate.getTime();
+    };
+
     return (
         <div className={styles.reservationForm}>
             <h2>Create Reservation</h2>
             <form onSubmit={handleSubmit}>
                 <div className={styles.formGroup}>
                     <label>Reservation Date:</label>
-                    <input
-                        type="datetime-local"
-                        name="dataRezervare"
-                        value={reservation.dataRezervare}
-                        onChange={handleChange}
-                        required
+                    <DatePicker
+                        selected={reservation.dataRezervare}
+                        onChange={handleDateChange}
+                        showTimeSelect
+                        timeIntervals={30}
+                        minDate={new Date()}
+                        filterTime={filterPassedTime}
+                        dateFormat="MMMM d, yyyy h:mm aa"
+                        className={styles.datePicker}
                     />
                 </div>
                 <div className={styles.formGroup}>
@@ -58,6 +77,7 @@ const CreateReservation = ({ onSubmit, restaurantId }) => {
                         onChange={handleChange}
                         min="1"
                         required
+                        className={styles.inputField}
                     />
                 </div>
                 <div className={styles.formGroup}>
@@ -66,6 +86,7 @@ const CreateReservation = ({ onSubmit, restaurantId }) => {
                         name="specificatii"
                         value={reservation.specificatii}
                         onChange={handleChange}
+                        className={styles.textArea}
                     />
                 </div>
                 <button type="submit" className={styles.submitButton}>Submit</button>
@@ -83,7 +104,7 @@ const CreateReservation = ({ onSubmit, restaurantId }) => {
                     <Typography id="reservation-success-description" sx={{ mt: 2 }}>
                         Your reservation has been sent. Please wait for confirmation.
                     </Typography>
-                    <Button onClick={handleClose} sx={{ mt: 2 }} variant="contained">
+                    <Button onClick={handleClose} sx={{ mt: 2, backgroundColor: '#43080e' }} variant="contained">
                         Close
                     </Button>
                 </Box>

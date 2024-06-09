@@ -53,34 +53,23 @@
 
 .contentContainer {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    position: relative;
-    overflow: hidden;
-    height: 1000px;
     width: 100%;
 }
 
 .section {
-    position: absolute;
-    top: 0;
-    left: 100%;
     width: 80%;
-    height: 100%;
     padding: 20px;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.5s ease;
+    margin-bottom: 20px;
     background-color: #f0f0f0;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* Ascunde secțiunea */
 }
 
 .section.active {
-    left: 50%;
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%);
+    display: block; /* Afișează secțiunea activă */
 }
 
 .overviewContent {
@@ -99,15 +88,20 @@
     border: 2px solid #43080e;
     padding: 20px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    width: 80%;
+    width: 100%;
 }
 
 .overviewImage {
-    width: 20%;
-    height: auto;
+    max-height: 150px; /* Limitează înălțimea imaginii */
+    max-width: 100%; /* Limitează lățimea imaginii */
+    height: auto; /* Păstrează proporțiile imaginii */
+    width: auto; /* Păstrează proporțiile imaginii */
     border-radius: 4px;
     margin-right: 20px;
+    margin-left: 75px;
+    display: block; /* Asigură-te că imaginea se comportă ca un element bloc */
 }
+
 
 .overviewDetails {
     width: 70%;
@@ -121,7 +115,7 @@
 }
 
 .overviewDetails p {
-    margin: 0 0 0 0 ;
+    margin: 0 0 0 0;
     font-size: 16px;
     color: #555;
 }
@@ -163,7 +157,7 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     flex: 1;
     align-items: center;
 }
@@ -319,13 +313,12 @@ hr {
 }
 
 .card2 {
-    height: 350px;
     width: 100%;
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     flex: 1;
     align-items: center;
     margin-top: 20px;
@@ -345,8 +338,9 @@ hr {
 .menuGrid {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 10px;
     justify-content: left;
+    padding-left: 40px;
 }
 
 .menuItem {
@@ -354,31 +348,31 @@ hr {
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 8px;
-    padding: 15px;
+    padding: 25px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    min-width: 200px; /* Ajustează dimensiunea minimă */
-    max-width: 480px; /* Ajustează dimensiunea maximă */
-    height: 150px;
-    margin: 5px;
+    min-width: 200px;
+    max-width: 500px;
+    height: 200px;
+    margin: 10px;
 }
 
 .menuItemImage {
-    width: 30%; /* Ajustează dimensiunea imaginii */
+    width: 30%;
     height: auto;
     border-radius: 4px;
 }
 
 .menuItemDetails {
-    width: 80%; /* Ajustează lățimea detaliilor */
+    width: 80%;
 }
 
 .menuItemDetails h3 {
-    font-size: 1.2em; /* Diminuează dimensiunea titlului */
+    font-size: 1.2em;
     margin-bottom: 5px;
-    color: #43080e; /* Culoare pentru titlu */
+    color: #43080e;
 }
 
 .menuItemDetails p {
@@ -388,14 +382,14 @@ hr {
 
 .menuItemDetails .price {
     font-weight: bold;
-    color: #000; /* Poți ajusta această culoare dacă dorești */
+    color: #000;
 }
 
 .type {
-    font-size: 1.5em; /* Diminuează dimensiunea titlului */
+    font-size: 1.5em;
     margin-bottom: 5px;
     margin-left: 20px;
-    color: #43080e; /* Culoare pentru titlu */
+    color: #43080e;
     text-align: left;
     text-decoration: none;
 }

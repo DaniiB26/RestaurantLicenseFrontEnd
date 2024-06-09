@@ -5,11 +5,14 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     width: 300px; /* Modificăm lățimea cardului */
     margin: 10px;
-    transition: transform 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    background-color: #fff;
 }
 
 .card:hover {
     transform: scale(1.05);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .imageContainer {
@@ -21,6 +24,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .logoContainer {
@@ -30,17 +34,18 @@
     background: rgba(255, 255, 255, 0.8);
     border-radius: 50%;
     padding: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
-    width: 40px; /* Modificăm dimensiunea logo-ului */
-    height: 40px;
+    width: 60px; /* Modificăm dimensiunea logo-ului */
+    height: 60px;
+    object-fit: contain;
     border-radius: 50%;
-    object-fit: cover;
 }
 
 .infoContainer {
-    padding: 10px;
+    padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -52,13 +57,7 @@
     color: #333;
 }
 
-.ratingContainer {
-    display: flex;
-    align-items: center;
-}
-
 .rating {
     font-size: 20px !important; /* Modificăm dimensiunea fontului pentru rating */
-    color: #ff9800;
-    margin-left: 5px;
+    color: #43080e; /* Schimbăm culoarea textului */
 }

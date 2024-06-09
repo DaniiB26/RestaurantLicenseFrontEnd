@@ -2,49 +2,83 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
 }
 
 .header {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.profileSection {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.manageSection {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
 }
 
 .tabs {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    border-bottom: 1px solid #e0e0e0;
 }
 
-.tabs button {
+.tabButton {
     margin: 0 10px;
     padding: 10px 20px;
     border: none;
-    background-color: #f0f0f0;
+    background-color: transparent;
     cursor: pointer;
+    font-size: 16px;
+    color: #43080e;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
 }
 
-.tabs button:hover {
-    background-color: #e0e0e0;
+.tabButton:hover {
+    color: #e91e63;
+}
+
+.activeTab {
+    border-bottom: 2px solid #e91e63;
 }
 
 .content {
-    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
     width: 100%;
-    max-width: 800px;
 }
 
 .manageButton {
-    background-color: #007bff;
+    background-color: #43080e;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
+    padding: 10px 20px; /* Increased padding for larger button */
+    border-radius: 20px;
     cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
+    font-size: 16px; /* Slightly larger font size */
+    transition: all 0.3s ease;
 }
 
 .manageButton:hover {
-    background-color: #0056b3;
+    background-color: #e91e63;
 }

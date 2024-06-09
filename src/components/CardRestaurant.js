@@ -17,11 +17,9 @@ const CardRestaurant = ({ restaurant, onClick }) => {
                 <Typography variant="subtitle1" className={styles.restaurantName}>
                     {restaurant.nume}
                 </Typography>
-                <Box className={styles.ratingContainer}>
-                    <Typography variant="body2" className={styles.rating}>
-                        {restaurant.rating_mediu}
-                    </Typography>
-                </Box>
+                <Typography variant="body2" className={styles.rating}>
+                    {restaurant.rating_mediu.toFixed(1)}
+                </Typography>
             </Box>
         </Box>
     );

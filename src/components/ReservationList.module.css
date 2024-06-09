@@ -1,25 +1,17 @@
+/* ReservationList.module.css */
 .reservationList {
-    margin: 20px 0;
+    width: 100%;
 }
 
-.reservationList h2 {
-    font-size: 1.5em;
-    margin-bottom: 15px;
-}
-
-.reservationList ul {
-    list-style: none;
-    padding: 0;
+.gridContainer {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
 }
 
 .reservationItem {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-.reservationItem p {
-    margin: 5px 0;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
 }

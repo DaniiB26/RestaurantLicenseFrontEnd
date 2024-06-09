@@ -1,5 +1,5 @@
 .body {
-    background-color: #7B3F00;
+    background-color: #43080e;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -53,7 +53,7 @@
 }
 
 .button {
-    background-color: #7B3F00 !important;
+    background-color: #43080e !important;
     color: white !important;
     margin-top: 16px;
     text-transform: none;
@@ -61,7 +61,7 @@
 }
 
 .button:hover {
-    background-color: #6b3700 !important;
+    background-color: #2c0509 !important;
 }
 
 .link {

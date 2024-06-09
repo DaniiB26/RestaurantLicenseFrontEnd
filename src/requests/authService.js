@@ -21,6 +21,14 @@ export const login = (email, password) => {
  * @param {string} data.password - The password of the new user
  * @returns {Promise} - A promise that resolves with the registration response
  */
-export const register = (data) => {
-    return withLogs(axios.post(`${baseUrl}/api/register`, data, config), 'register');
+export const register = async (data) => {
+    try {
+        const response = await axios.post(`${baseUrl}/api/register`, data, config);
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.data) {
+            throw new Error(error.response.data);
+        }
+        throw new Error('An error occurred during registration');
+    }
 };

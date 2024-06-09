@@ -8,6 +8,8 @@
     margin: 20px 0;
     padding: 20px;
     transition: transform 0.2s ease-in-out;
+    max-width: 600px;
+    margin: 20px auto;
 }
 
 .reservationCard:hover {
@@ -17,6 +19,7 @@
 .cardHeader {
     text-align: center;
     margin-bottom: 20px;
+    color: #43080e;
 }
 
 .userInfo {
@@ -26,11 +29,7 @@
     margin-bottom: 10px;
 }
 
-.userName {
-    font-size: 16px;
-    color: #333;
-}
-
+.userName,
 .userRating {
     font-size: 16px;
     color: #333;
@@ -55,10 +54,14 @@
     padding: 5px 10px;
     border-radius: 4px;
     color: #fff;
+    display: inline-block;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .status.pending {
     background-color: #ffc107;
+    color: #333;
 }
 
 .status.confirmed {
@@ -70,6 +73,9 @@
 }
 
 .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
     margin-top: 20px;
 }
 
@@ -79,9 +85,9 @@
     color: #fff;
     cursor: pointer;
     font-size: 16px;
-    margin-right: 10px;
     padding: 10px 20px;
     transition: background-color 0.2s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .confirmButton {
@@ -98,4 +104,23 @@
 
 .cancelButton:hover {
     background-color: #c82333;
+}
+
+.ratingSection {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.evaluateButton {
+    background-color: #43080e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.evaluateButton:hover {
+    background-color: #333;
 }

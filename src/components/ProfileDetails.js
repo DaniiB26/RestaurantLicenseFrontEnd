@@ -12,7 +12,7 @@ const ProfileDetails = ({ user }) => {
             <p><strong>Full Name:</strong> {user.fullName}</p>
             <p><strong>Email:</strong> {user.email}</p>
             <p><strong>Phone Number:</strong> {user.phoneNumber}</p>
-            <p><strong>Average Grade:</strong> {user.avgGrade}</p>
+            <p><strong>Average Grade:</strong> {user.avgGrade !== -1 ? user.avgGrade.toFixed(2) : 'Not yet rated'}</p>
         </div>
     );
 };

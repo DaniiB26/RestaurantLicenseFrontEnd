@@ -5,17 +5,17 @@ const ReservationList = ({ reservations }) => {
     return (
         <div className={styles.reservationList}>
             <h2>Recent Reservations</h2>
-            <ul>
+            <div className={styles.gridContainer}>
                 {reservations.map((reservation, index) => (
-                    <li key={index} className={styles.reservationItem}>
-                        <p><strong>Restaurant:</strong> {reservation.restaurantId}</p>
+                    <div key={index} className={styles.reservationItem}>
+                        <p><strong>Restaurant:</strong> {reservation.restaurantName}</p>
                         <p><strong>Date:</strong> {new Date(reservation.dataRezervare).toLocaleString()}</p>
                         <p><strong>Status:</strong> {reservation.status}</p>
                         <p><strong>Number of People:</strong> {reservation.numarPersoane}</p>
                         <p><strong>Specifications:</strong> {reservation.specificatii}</p>
-                    </li>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };

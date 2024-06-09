@@ -7,13 +7,15 @@ import {
     Typography,
     TextField,
     Button,
-    Link
+    Link,
+    Alert // Import Alert component from Material UI
 } from '@mui/material';
 import styles from './Login.module.css';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(''); // State for error message
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -25,6 +27,7 @@ const Login = () => {
             navigate('/city/Brașov');
         } catch (error) {
             console.error('Error during login:', error);
+            setError('Email or password are invalid!'); // Set error message
         }
     };
 
@@ -37,6 +40,7 @@ const Login = () => {
                     <Typography component="h1" variant="h5" className={styles.title}>
                         Login
                     </Typography>
+                    {error && <Alert severity="error" className={styles.alert}>{error}</Alert>} {/* Display error message */}
                     <form onSubmit={handleSubmit} className={styles.form}>
                         <TextField
                             required

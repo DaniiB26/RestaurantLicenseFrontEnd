@@ -4,28 +4,22 @@ import { useNavigate } from 'react-router-dom';
 import { register as registerRequest } from '../requests/authService';
 import { AuthContext } from '../context/AuthProvider';
 import {
-    Container,
     CssBaseline,
-    Box,
-    Grid,
+    Typography,
     TextField,
     Button,
-    Typography,
-    Link
+    Link,
+    Alert // Import Alert component from Material UI
 } from '@mui/material';
 import styles from './Register.module.css';
 
 export default function Register() {
     const { register, handleSubmit, getValues } = useForm();
-    const { isAuthenticated, login } = useContext(AuthContext);
+    const { login } = useContext(AuthContext);
     const navigate = useNavigate();
     const [error, setError] = useState(null);
 
     const onSubmit = async (data) => {
-        if (data.passwordHash !== data.confirmPassword) {
-            setError("Passwords do not match!");
-            return;
-        }
         try {
             await registerRequest(data);
             if (login) {
@@ -47,7 +41,7 @@ export default function Register() {
                     <Typography component="h1" variant="h5" className={styles.title}>
                         Sign Up
                     </Typography>
-                    {error && <Typography color="error">{error}</Typography>}
+                    {error && <Alert severity="error" className={styles.alert}>{error}</Alert>} {/* Display error message */}
                     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                         <TextField
                             required

@@ -1,43 +1,69 @@
+/* ReviewList.module.css */
+
 .reviewList {
-    margin: 20px 0;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .reviewList h2 {
-    font-size: 1.5em;
-    margin-bottom: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #43080e;
 }
 
-.reviewList ul {
-    list-style: none;
-    padding: 0;
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
 }
 
 .reviewItem {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.reviewItem:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .reviewItem p {
-    margin: 5px 0;
+    margin: 10px 0;
 }
 
 .ratingContainer {
-    display: flex;
+    display: block;
     align-items: center;
-    margin: 5px 0;
+    margin: 10px 0;
 }
 
 .recomandari ul {
-    list-style: disc inside;
     padding-left: 20px;
+    margin: 10px 0;
+}
+
+.recomandari ul li {
+    list-style-type: disc;
     margin: 5px 0;
 }
 
 .likesDislikes {
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
     margin-top: 10px;
+    font-size: 1.2em;
+}
+
+.likesDislikes span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #43080e;
 }

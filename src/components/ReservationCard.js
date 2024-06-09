@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './ReservationCard.module.css';
-import ClientRating from './ClientRating'; // Importăm componenta ClientRating
-import { createNotification } from '../requests/notificationService'; // Importăm funcția de creare a notificării
+import ClientRating from './ClientRating';
+import { createNotification } from '../requests/notificationService';
 
 const ReservationCard = ({ reservation, onStatusChange, onRateUser }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +29,7 @@ const ReservationCard = ({ reservation, onStatusChange, onRateUser }) => {
     const handleSubmitRating = async (rating) => {
         try {
             await onRateUser(reservation.id, rating);
-            reservation.isRated = true; // Actualizează flag-ul în rezervare după ce clientul a fost evaluat
+            reservation.isRated = true;
         } catch (error) {
             console.error('Error rating user:', error);
         }

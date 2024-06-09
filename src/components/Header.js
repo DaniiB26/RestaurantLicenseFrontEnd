@@ -20,12 +20,13 @@ import {
 import { Menu as MenuIcon, Notifications as NotificationsIcon } from '@mui/icons-material';
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import LogoutIcon from "@mui/icons-material/Logout";
+import RestaurantIcon from '@mui/icons-material/Restaurant';
 import styles from "./Header.module.css";
 import useGeoLocation from "../hooks/useGeoLocation";
 import { getNotifications, markNotificationsAsRead } from "../requests/notificationService";
 
 export default function Header() {
-    const { username, user } = useContext(AuthContext);
+    const { user, logout, restaurant } = useContext(AuthContext);
     const { city, setCity } = useCity();
     const [anchorEl, setAnchorEl] = useState(null);
     const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
@@ -90,12 +91,17 @@ export default function Header() {
     };
 
     const handleLogoutClick = () => {
-        // Implement logout logic here
+        logout();
         handleMenuClose();
     };
 
     const handleLogoClick = () => {
         navigate('/home');
+    };
+
+    const handleManageRestaurantClick = () => {
+        navigate(`/manage-restaurant/${restaurant.id}`);
+        handleMenuClose();
     };
 
     return (
@@ -184,6 +190,11 @@ export default function Header() {
                             <MenuItem onClick={handleProfileClick}>
                                 <AccountBoxIcon style={{ marginRight: '10px' }} /> View Profile
                             </MenuItem>
+                            {user?.manager && (
+                                <MenuItem onClick={handleManageRestaurantClick}>
+                                    <RestaurantIcon style={{ marginRight: '10px' }} /> Manage Restaurant
+                                </MenuItem>
+                            )}
                             <MenuItem onClick={handleLogoutClick}>
                                 <LogoutIcon style={{ marginRight: '10px' }} /> Logout
                             </MenuItem>

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { login as loginRequest } from '../requests/authService';
 import { getLogger } from '../utils';
 import { getUserByEmail } from "../requests/userService";
+import { getRestaurantByManagerId } from "../requests/restaurantService";
 
 const log = getLogger('AuthProvider');
 
@@ -24,6 +25,7 @@ export const AuthProvider = ({ children }) => {
 
     const { isAuthenticated, isAuthenticating, authenticationError, email, password, userId, token, user, fullName } = state;
     const navigate = useNavigate();
+    const [restaurant, setRestaurant] = useState(null);
 
     useEffect(() => {
         if (email) {
@@ -39,6 +41,17 @@ export const AuthProvider = ({ children }) => {
         }
     }, [email]);
 
+    useEffect(() => {
+        if (user && user.id) {
+            getRestaurantByManagerId(user.id).then((restaurantData) => {
+                setRestaurant(restaurantData);
+                log('get restaurants for manager', restaurantData);
+            }).catch((error) => {
+                log('getRestaurantByManagerId failed', error);
+            });
+        }
+    }, [user]); // Modificare aici pentru a asculta la schimbări ale `user`
+
     const login = useCallback(async (email, password) => {
         log('login');
         setState((prevState) => ({
@@ -48,21 +61,21 @@ export const AuthProvider = ({ children }) => {
         }));
 
         try {
-            const authToken = await loginRequest(email, password);
+            const { token, userId } = await loginRequest(email, password);
             log('login succeeded');
 
             setState((prevState) => ({
                 ...prevState,
                 isAuthenticated: true,
                 isAuthenticating: false,
-                token: authToken.token,
-                userId: authToken.userId,
+                token: token, // Modificare aici
+                userId: userId,
                 email,
             }));
 
-            localStorage.setItem('token', authToken.token);
+            localStorage.setItem('token', token); // Modificare aici
             localStorage.setItem('email', email);
-            localStorage.setItem('id', authToken.userId);
+            localStorage.setItem('id', userId);
             navigate("/home");  // Redirecționare după autentificare
 
             // Obține datele utilizatorului după autentificare
@@ -102,7 +115,7 @@ export const AuthProvider = ({ children }) => {
     }, [navigate]);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, isAuthenticating, login, logout, authenticationError, user, fullName }}>
+        <AuthContext.Provider value={{ isAuthenticated, isAuthenticating, login, logout, authenticationError, user, fullName, restaurant }}>
             {children}
         </AuthContext.Provider>
     );
