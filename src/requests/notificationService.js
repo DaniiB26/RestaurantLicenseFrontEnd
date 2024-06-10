@@ -20,9 +20,9 @@ export const markNotificationsAsRead = async (userId) => {
     }
 };
 
-export const createNotification = async (userId, message) => {
+export const createNotification = async (userId, restaurantId, message) => {
     try {
-        const response = await axios.post(`${baseUrl}/api/notifications/create`, { userId, message }, config);
+        const response = await axios.post(`${baseUrl}/api/notifications/createReservationNotification`, { userId, restaurantId, message }, config);
         return response.data;
     } catch (error) {
         console.error("Error creating notification:", error);

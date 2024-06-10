@@ -1,7 +1,7 @@
 import { baseUrl, config, withLogs } from "../utils";
 import axios from "axios";
 
-export const findReviewsByRestaurant = async (restaurantId) => {
+export const findReviewsForRestaurant = async (restaurantId) => {
 
     try {
         const response = await axios.get(`${baseUrl}/api/reviews/restaurant/${restaurantId}`);

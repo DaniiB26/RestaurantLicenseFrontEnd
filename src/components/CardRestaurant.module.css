@@ -3,7 +3,7 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    width: 300px; /* Modificăm lățimea cardului */
+    width: 300px;
     margin: 10px;
     transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
@@ -17,7 +17,7 @@
 
 .imageContainer {
     position: relative;
-    height: 180px; /* Modificăm înălțimea imaginii */
+    height: 180px;
 }
 
 .image {
@@ -38,7 +38,7 @@
 }
 
 .logo {
-    width: 60px; /* Modificăm dimensiunea logo-ului */
+    width: 60px;
     height: 60px;
     object-fit: contain;
     border-radius: 50%;
@@ -53,11 +53,11 @@
 
 .restaurantName {
     font-weight: bold;
-    font-size: 20px !important; /* Modificăm dimensiunea fontului pentru numele restaurantului */
+    font-size: 20px !important;
     color: #333;
 }
 
 .rating {
-    font-size: 20px !important; /* Modificăm dimensiunea fontului pentru rating */
-    color: #43080e; /* Schimbăm culoarea textului */
+    font-size: 20px !important;
+    color: #43080e;
 }

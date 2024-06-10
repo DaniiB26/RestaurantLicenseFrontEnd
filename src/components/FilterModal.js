@@ -5,7 +5,7 @@ import BlockIcon from '@mui/icons-material/Block';
 
 const FilterModal = ({ isOpen, onClose, onApply, restaurantTypes }) => {
     const [filters, setFilters] = useState({
-        tip_restaurant: [],
+        tipRestaurant: [],
         rating_mediu: 0,
         pret: 0,
     });
@@ -58,7 +58,7 @@ const FilterModal = ({ isOpen, onClose, onApply, restaurantTypes }) => {
                             <label key={index} className={styles.checkboxLabel}>
                                 <input
                                     type="checkbox"
-                                    name="tip_restaurant"
+                                    name="tipRestaurant"
                                     value={type}
                                     onChange={handleChange}
                                     className={styles.checkbox}

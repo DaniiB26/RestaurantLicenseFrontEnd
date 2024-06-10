@@ -77,7 +77,8 @@ const Home = () => {
 
     const handleFilterApply = async (filters) => {
         try {
-            const response = await fetchFilteredRestaurants(city, filters.tip_restaurant, filters.rating_mediu, filters.pret);
+            console.log(`Your city: ${city}`);
+            const response = await fetchFilteredRestaurants(city, filters.tipRestaurant, filters.rating_mediu, filters.pret);
             setFilteredRestaurants(response);
             navigate('/search', { state: { filteredRestaurants: response } });
         } catch (error) {
@@ -86,8 +87,8 @@ const Home = () => {
     };
 
     const restaurantTypes = [...new Set((Array.isArray(restaurants) ? restaurants : []).reduce((acc, restaurant) => {
-        if (Array.isArray(restaurant.tip_restaurant)) {
-            return acc.concat(restaurant.tip_restaurant);
+        if (Array.isArray(restaurant.tipRestaurant)) {
+            return acc.concat(restaurant.tipRestaurant);
         }
         return acc;
     }, []))];

@@ -12,7 +12,7 @@
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 300px; /* Ajustează dimensiunea cardului */
+    width: 300px;
     position: relative;
     display: flex;
     flex-direction: column;

@@ -72,10 +72,10 @@
     background-color: #43080e;
     color: white;
     border: none;
-    padding: 10px 20px; /* Increased padding for larger button */
+    padding: 10px 20px;
     border-radius: 20px;
     cursor: pointer;
-    font-size: 16px; /* Slightly larger font size */
+    font-size: 16px;
     transition: all 0.3s ease;
 }
 

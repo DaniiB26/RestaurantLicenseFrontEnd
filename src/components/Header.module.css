@@ -69,7 +69,6 @@
     color: #555;
 }
 
-/* Dropdown Menu Styling */
 .MuiPaper-root {
     background-color: #f8f9fa !important;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
@@ -89,13 +88,12 @@
     color: #fff !important;
 }
 
-/* Icon Button */
+
 .MuiIconButton-root {
     font-size: 40px !important;
     padding-left: 2 !important;
 }
 
-/* Notification Menu Styling */
 .notificationHeader {
     padding: 10px;
     background-color: #f8f9fa;
@@ -125,4 +123,57 @@
 
 .notificationItemText {
     flex-grow: 1;
+}
+
+.similarButtonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.similarButton {
+    font-size: 0.60em;
+    padding: 2px 5px;
+    background-color: #43080e;
+    color: white;
+    &:hover {
+        background-color: #5a0e2c;
+    }
+}
+
+.modalBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: white;
+    border: 2px solid #000;
+    box-shadow: 24px;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modalTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.similarRestaurantsList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.closeButton {
+    background-color: #43080e !important;
+    color: white !important;
+    &:hover {
+        background-color: #333 !important;
+    }
 }

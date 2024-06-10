@@ -41,7 +41,7 @@ export default function Register() {
                     <Typography component="h1" variant="h5" className={styles.title}>
                         Sign Up
                     </Typography>
-                    {error && <Alert severity="error" className={styles.alert}>{error}</Alert>} {/* Display error message */}
+                    {error && <Alert severity="error" className={styles.alert}>{error}</Alert>}
                     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                         <TextField
                             required

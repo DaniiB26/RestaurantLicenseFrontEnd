@@ -10,16 +10,11 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 1);
 }
 
-.image {
-    width: 100%;
-    height: auto;
-}
-
 .cityContainer {
     display: flex;
     background-color: rgba(255, 255, 255, 0.8);
     padding: 10px 200px;
-    margin-top: 25px; /* Adjust this value to control the gap between imageContainer and cityContainer */
+    margin-top: 25px;
 }
 
 .locationIcon {
@@ -46,6 +41,12 @@
     border-radius: 30px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 1);
     border: 5px solid #43080e;
+}
+
+
+.image {
+    width: 100%;
+    height: auto;
 }
 
 .searchBar {
@@ -79,7 +80,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
-    padding: 10px 200px;
+    padding: 10px 190px;
 }
 
 .userInfo {

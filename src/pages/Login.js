@@ -40,7 +40,7 @@ const Login = () => {
                     <Typography component="h1" variant="h5" className={styles.title}>
                         Login
                     </Typography>
-                    {error && <Alert severity="error" className={styles.alert}>{error}</Alert>} {/* Display error message */}
+                    {error && <Alert severity="error" className={styles.alert}>{error}</Alert>}
                     <form onSubmit={handleSubmit} className={styles.form}>
                         <TextField
                             required

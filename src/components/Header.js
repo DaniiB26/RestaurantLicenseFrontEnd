@@ -16,6 +16,8 @@ import {
     ListItem,
     ListItemText,
     Divider,
+    Modal,
+    Button,
 } from '@mui/material';
 import { Menu as MenuIcon, Notifications as NotificationsIcon } from '@mui/icons-material';
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
@@ -24,6 +26,8 @@ import RestaurantIcon from '@mui/icons-material/Restaurant';
 import styles from "./Header.module.css";
 import useGeoLocation from "../hooks/useGeoLocation";
 import { getNotifications, markNotificationsAsRead } from "../requests/notificationService";
+import { getSimilarRestaurants } from "../requests/restaurantService";
+import CardRestaurant from "./CardRestaurant";
 
 export default function Header() {
     const { user, logout, restaurant } = useContext(AuthContext);
@@ -32,6 +36,9 @@ export default function Header() {
     const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
     const [notifications, setNotifications] = useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
+    const [similarRestaurants, setSimilarRestaurants] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalRestaurantId, setModalRestaurantId] = useState(null);
     const navigate = useNavigate();
     const location = useGeoLocation();
 
@@ -50,7 +57,7 @@ export default function Header() {
     const fetchNotifications = async () => {
         try {
             const notifications = await getNotifications(user.id);
-            notifications.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // Sort notifications by createdAt in descending order
+            notifications.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
             setNotifications(notifications);
             setUnreadCount(notifications.filter(n => !n.read).length);
         } catch (error) {
@@ -60,11 +67,15 @@ export default function Header() {
 
     const handleCityChange = (event) => {
         setCity(event.target.value);
-        navigate('/home'); // Actualizează pagina Home pentru noul oraș
+        navigate('/home');
     };
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
+    };
+
+    const handleRestaurantClick = (restaurantName) => {
+        navigate(`/restaurant/name/${restaurantName}`);
     };
 
     const handleNotificationMenuOpen = (event) => {
@@ -102,6 +113,25 @@ export default function Header() {
     const handleManageRestaurantClick = () => {
         navigate(`/manage-restaurant/${restaurant.id}`);
         handleMenuClose();
+    };
+
+    const handleViewSimilarRestaurants = async (restaurantId) => {
+        try {
+            console.log(`Fetching similar restaurants for restaurantId: ${restaurantId}`);
+            const similar = await getSimilarRestaurants(restaurantId);
+            console.log('Similar restaurants:', similar);
+            setSimilarRestaurants(similar);
+            setModalRestaurantId(restaurantId);
+            setIsModalOpen(true);
+        } catch (error) {
+            console.error("Error fetching similar restaurants:", error);
+        }
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSimilarRestaurants([]);
+        setModalRestaurantId(null);
     };
 
     return (
@@ -237,6 +267,13 @@ export default function Header() {
                                         <ListItem key={notification.id} button>
                                             <ListItemText primary={notification.message} secondary={new Date(notification.createdAt).toLocaleString()} />
                                             {!notification.read && <Box className={styles.unreadDot}></Box>}
+                                            {notification.message.includes("cancelled") && notification.restaurantId && (
+                                                <Box className={styles.similarButtonContainer}>
+                                                    <Button onClick={() => handleViewSimilarRestaurants(notification.restaurantId)} className={styles.similarButton}>
+                                                        See Similar Restaurants
+                                                    </Button>
+                                                </Box>
+                                            )}
                                         </ListItem>
                                     ))}
                                 </List>
@@ -245,6 +282,30 @@ export default function Header() {
                     </Box>
                 </Toolbar>
             </AppBar>
+            <Modal
+                open={isModalOpen}
+                onClose={handleCloseModal}
+                aria-labelledby="similar-restaurants-modal-title"
+                aria-describedby="similar-restaurants-modal-description"
+            >
+                <Box className={styles.modalBox}>
+                    <Typography id="similar-restaurants-modal-title" variant="h6" component="h2">
+                        Similar Restaurants
+                    </Typography>
+                    <Box className={styles.similarRestaurantsList}>
+                        {similarRestaurants.map((restaurant) => (
+                            <CardRestaurant
+                                key={restaurant.id}
+                                restaurant={restaurant}
+                                onClick={() => handleRestaurantClick(restaurant.nume)}
+                            />
+                        ))}
+                    </Box>
+                    <Button onClick={handleCloseModal} sx={{ mt: 2 }} variant="contained" className={styles.closeButton}>
+                        Close
+                    </Button>
+                </Box>
+            </Modal>
         </Box>
     );
 }

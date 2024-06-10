@@ -9,7 +9,7 @@ import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { Gallery } from "react-grid-gallery";
 import CardReview from '../components/CardReview';
-import { addReview, findReviewsByRestaurant } from "../requests/reviewService";
+import { addReview, findReviewsForRestaurant } from "../requests/reviewService";
 import CreateReview from "../components/CreateReview";
 import { AuthContext } from "../context/AuthProvider";
 import CreateReservation from "../components/CreateReservation";
@@ -32,7 +32,7 @@ const RestaurantPage = () => {
             try {
                 const restaurantData = await getRestaurantByName(name);
                 setRestaurant(restaurantData);
-                const reviewsData = await findReviewsByRestaurant(restaurantData.id);
+                const reviewsData = await findReviewsForRestaurant(restaurantData.id);
                 setReviews(reviewsData);
                 setLoading(false);
             } catch (err) {
@@ -178,7 +178,7 @@ const RestaurantPage = () => {
                     <div className={styles.overviewContent}>
                         <div className={styles.overviewContainer}>
                             {restaurant.logo && restaurant.logo.length > 0 && (
-                                <img src={restaurant.logo} alt="Restaurant Overview" className={styles.overviewImage} />
+                                <img src={restaurant.logo} alt="Restaurant Overview" className={styles.overviewImage}/>
                             )}
                             <div className={styles.overviewDetails}>
                                 <h2>{restaurant.nume}</h2>
@@ -201,37 +201,37 @@ const RestaurantPage = () => {
                                             name='rating'
                                         />
                                     </div>
-                                    <hr />
+                                    <hr/>
                                     <ul>
                                         <li>Food <div className={styles.ratingStars}><StarRatings
                                             rating={restaurant.ratings.food} starRatedColor="#43080e" numberOfStars={5}
-                                            starDimension="15px" starSpacing="2px" name='food' /></div></li>
+                                            starDimension="15px" starSpacing="2px" name='food'/></div></li>
                                         <li>Service <div className={styles.ratingStars}><StarRatings
                                             rating={restaurant.ratings.service} starRatedColor="#43080e"
-                                            numberOfStars={5} starDimension="15px" starSpacing="2px" name='service' />
+                                            numberOfStars={5} starDimension="15px" starSpacing="2px" name='service'/>
                                         </div></li>
                                         <li>Value <div className={styles.ratingStars}><StarRatings
                                             rating={restaurant.ratings.value} starRatedColor="#43080e" numberOfStars={5}
-                                            starDimension="15px" starSpacing="2px" name='value' /></div></li>
+                                            starDimension="15px" starSpacing="2px" name='value'/></div></li>
                                         <li>Atmosphere <div className={styles.ratingStars}><StarRatings
                                             rating={restaurant.ratings.atmosphere} starRatedColor="#43080e"
-                                            numberOfStars={5} starDimension="15px" starSpacing="2px" name='atmosphere' />
+                                            numberOfStars={5} starDimension="15px" starSpacing="2px" name='atmosphere'/>
                                         </div></li>
                                     </ul>
                                 </div>
                             </div>
                             <div className={styles.card}>
                                 <h2>Details</h2>
-                                <hr />
-                                <p><strong>CUISINES</strong><br />{restaurant.tip_restaurant.join(', ')}</p>
-                                <p><strong>SPECIAL DIETS</strong><br />{restaurant.special_diets.join(', ')}</p>
-                                <p><strong>MEALS</strong><br />{restaurant.meals.join(', ')}</p>
-                                <p><strong>FEATURES</strong><br />{restaurant.features.join(', ')}</p>
-                                <hr />
+                                <hr/>
+                                <p><strong>CUISINES</strong><br/>{restaurant.tipRestaurant.join(', ')}</p>
+                                <p><strong>SPECIAL DIETS</strong><br/>{restaurant.special_diets.join(', ')}</p>
+                                <p><strong>MEALS</strong><br/>{restaurant.meals.join(', ')}</p>
+                                <p><strong>FEATURES</strong><br/>{restaurant.features.join(', ')}</p>
+                                <hr/>
                             </div>
                             <div className={styles.card}>
                                 <h2>Location</h2>
-                                <hr />
+                                <hr/>
                                 <APIProvider apiKey={'AIzaSyC1BKTNIBz_R352_ckftdUyoSXbJLBQbOo'}>
                                     <Map
                                         defaultCenter={{
@@ -239,13 +239,13 @@ const RestaurantPage = () => {
                                             lng: restaurant.coordonate.longitudine
                                         }}
                                         defaultZoom={15}
-                                        style={{ width: '21vw', height: '30vh', marginLeft: '1vw', borderRadius: '4px' }}
+                                        style={{width: '21vw', height: '30vh', marginLeft: '1vw', borderRadius: '4px'}}
                                         gestureHandling={'greedy'}
                                         disableDefaultUI={true}>
                                         <Marker position={{
                                             lat: restaurant.coordonate.latitudine,
                                             lng: restaurant.coordonate.longitudine
-                                        }} />
+                                        }}/>
                                     </Map>
                                 </APIProvider>
                                 <p><strong>{restaurant.adresa}</strong></p>
@@ -254,12 +254,12 @@ const RestaurantPage = () => {
                     </div>
                     <div className={styles.card2}>
                         <h2>Photos</h2>
-                        <hr />
+                        <hr/>
                         <div className={styles.gallery}>
                             <Gallery images={photos2} enableImageSelection={false}
-                                     onClick={(index) => handleOpenImageModal(index)} />
+                                     onClick={(index) => handleOpenImageModal(index)}/>
                         </div>
-                        <hr />
+                        <hr/>
                     </div>
                 </div>
                 <div className={`${styles.section} ${activeSection === 'menu' ? styles.active : ''}`} id="menu">
@@ -273,9 +273,12 @@ const RestaurantPage = () => {
                                         <div className={styles.menuItemDetails}>
                                             <h3>{item.preparat}</h3>
                                             <p>{item.descriere}</p>
-                                            <p className={styles.price} >{item.pret}</p>
+                                            <p className={styles.price}>{item.pret}</p>
                                         </div>
-                                        <img src={item.imagine} alt={item.preparat} className={styles.menuItemImage} />
+                                        {item.imagine && item.imagine.length > 0 && (
+                                            <img src={item.imagine} alt={item.preparat}
+                                                 className={styles.menuItemImage}/>
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -287,17 +290,17 @@ const RestaurantPage = () => {
                     <button className={styles.addReviewButton} onClick={handleOpenReviewModal}>Add Review</button>
                     <div className={styles.reviewsGrid}>
                         {reviews.map((review, index) => (
-                            <CardReview key={index} review={review} />
+                            <CardReview key={index} review={review}/>
                         ))}
                     </div>
                 </div>
                 <div className={`${styles.section} ${activeSection === 'reserve' ? styles.active : ''}`} id="reserve">
                     <h1>Reserve</h1>
-                    <CreateReservation onSubmit={handleSubmitReservation} restaurantId={restaurant.id} />
+                    <CreateReservation onSubmit={handleSubmitReservation} restaurantId={restaurant.id}/>
                 </div>
             </div>
             <ImageModal isOpen={isImageModalOpen} onClose={handleCloseImageModal} images={photos}
-                        startIndex={currentImageIndex} />
+                        startIndex={currentImageIndex}/>
             <CreateReview
                 isOpen={isReviewModalOpen}
                 onClose={handleCloseReviewModal}

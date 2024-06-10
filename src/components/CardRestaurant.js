@@ -7,7 +7,7 @@ const CardRestaurant = ({ restaurant, onClick }) => {
         <Box className={styles.card} onClick={onClick}>
             <Box className={styles.imageContainer}>
                 {restaurant.meniu && restaurant.meniu.length > 0 && (
-                    <img src={restaurant.meniu[0].imagine} alt={restaurant.nume} className={styles.image} />
+                    <img src={restaurant.thumbnail} alt={restaurant.nume} className={styles.image} />
                 )}
                 <Box className={styles.logoContainer}>
                     <img src={restaurant.logo} alt="Logo" className={styles.logo} />

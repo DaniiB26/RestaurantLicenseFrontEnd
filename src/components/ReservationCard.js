@@ -12,7 +12,7 @@ const ReservationCard = ({ reservation, onStatusChange, onRateUser }) => {
             const message = newStatus === 'confirmed'
                 ? `Your reservation at ${reservation.restaurantName} has been confirmed.`
                 : `Your reservation at ${reservation.restaurantName} has been cancelled.`;
-            await createNotification(reservation.userId, message);
+            await createNotification(reservation.userId, reservation.restaurantId, message); // Asigură-te că include restaurantId aici
         } catch (error) {
             console.error('Error changing status:', error);
         }
@@ -49,9 +49,9 @@ const ReservationCard = ({ reservation, onStatusChange, onRateUser }) => {
                 <h3>Reservation Details</h3>
             </div>
             <div className={styles.userInfo}>
-                <span className={styles.userName}><strong>User:</strong> {reservation.userFullName}</span>
+                <span className={styles.userName}><strong>Client:</strong> {reservation.userFullName}</span>
                 <span className={styles.userRating}>
-                    <strong>User Rating:</strong>
+                    <strong>Grade:</strong>
                     {renderUserRating()}
                 </span>
             </div>

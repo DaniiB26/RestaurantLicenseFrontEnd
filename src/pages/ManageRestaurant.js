@@ -43,6 +43,17 @@ const ManageRestaurant = () => {
         }
     };
 
+    const handleRateUser = async (reservationId, rating) => {
+        try {
+            await rateUserForReservation(reservationId, rating);
+            setReservations(reservations.map(reservation =>
+                reservation.id === reservationId ? { ...reservation, isRated: true } : reservation
+            ));
+        } catch (error) {
+            console.error('Error rating user:', error);
+        }
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -63,6 +74,7 @@ const ManageRestaurant = () => {
                                     key={reservation.id}
                                     reservation={reservation}
                                     onStatusChange={handleStatusChange}
+                                    onRateUser={handleRateUser}
                                 />
                             ))
                         )}
@@ -77,6 +89,7 @@ const ManageRestaurant = () => {
                                     key={reservation.id}
                                     reservation={reservation}
                                     onStatusChange={handleStatusChange}
+                                    onRateUser={handleRateUser}
                                 />
                             ))
                         )}
@@ -91,6 +104,7 @@ const ManageRestaurant = () => {
                                     key={reservation.id}
                                     reservation={reservation}
                                     onStatusChange={handleStatusChange}
+                                    onRateUser={handleRateUser}
                                 />
                             ))
                         )}

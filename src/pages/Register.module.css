@@ -27,7 +27,6 @@
 .img {
     width: 50%;
     object-fit: cover;
-    /*filter: blur(2px);*/
 }
 
 .cardContent {
@@ -45,7 +44,7 @@
 .form {
     display: flex;
     flex-direction: column;
-    gap: 16px; /* Adaugă spațiu între câmpuri */
+    gap: 16px;
 }
 
 .textField {

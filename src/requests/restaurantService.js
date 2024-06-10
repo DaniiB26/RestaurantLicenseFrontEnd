@@ -24,10 +24,10 @@ export const fetchRestaurantsByCity = async (city) => {
     }
 };
 
-export const fetchFilteredRestaurants = async (city, tipuri, ratingMin, pretMin) => {
+export const fetchFilteredRestaurants = async (oras, tipuri, ratingMin, pretMin) => {
     try {
         const response = await axios.post(`${baseUrl}/api/restaurants/filters`, {
-            city,
+            oras,
             tipuri,
             ratingMin,
             pretMin
@@ -37,6 +37,7 @@ export const fetchFilteredRestaurants = async (city, tipuri, ratingMin, pretMin)
         throw error;
     }
 };
+
 
 export const getRestaurantByManagerId = async (managerId) => {
     try {
@@ -52,6 +53,15 @@ export const getRestaurantByManagerId = async (managerId) => {
 export const getRestaurantById = async (id) => {
     try {
         const response = await axios.get(`${baseUrl}/api/restaurants/${id}`, config);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const getSimilarRestaurants = async (restaurantId) => {
+    try {
+        const response = await axios.get(`${baseUrl}/api/restaurants/similar/${restaurantId}`);
         return response.data;
     } catch (error) {
         throw error;
