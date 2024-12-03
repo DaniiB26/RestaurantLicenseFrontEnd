@@ -232,7 +232,7 @@ const RestaurantPage = () => {
                             <div className={styles.card}>
                                 <h2>Location</h2>
                                 <hr/>
-                                <APIProvider apiKey={'AIzaSyC1BKTNIBz_R352_ckftdUyoSXbJLBQbOo'}>
+                                <APIProvider apiKey={''}>
                                     <Map
                                         defaultCenter={{
                                             lat: restaurant.coordonate.latitudine,
